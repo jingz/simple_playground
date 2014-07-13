@@ -7,7 +7,7 @@
 
 ### Usage
 
-#### define rules in a function by calling `BuildPlayground(command, comment, print_pattern)` in ~/.vimrc
+define patterns in a function by calling `BuildPlayground(command, comment, print_pattern)` in ~/.vimrc
 ##### for example
 ```vimscript
 fun! BuildNodePlayground()
@@ -16,4 +16,4 @@ fun! BuildNodePlayground()
 endfun
 ```
 in normal mode `:call BuildNodePlayground()` to enable the playground
-to disable `:call DistroyPlayground()`
+to disable `:call DestroyPlayground()`
