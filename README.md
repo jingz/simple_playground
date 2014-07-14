@@ -15,5 +15,7 @@ fun! BuildNodePlayground()
     echom "Let's play node"
 endfun
 ```
-in normal mode `:call BuildNodePlayground()` to enable the playground
-to disable `:call DestroyPlayground()`
+- in normal mode `:call BuildNodePlayground()` to enable the playground
+- to disable `:call DestroyPlayground()`
+
+![example](https://raw.github.com/jingz/simple_playground/master/out.gif)
