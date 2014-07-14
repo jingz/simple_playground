@@ -4,7 +4,8 @@
 > current file in comment format after you write/save the file.
 > It works in case one script line produce one output line.
 > \*loop print is not working now
-*Aim to reduce time of learning new script or programming language.*
+
+#### Aim to reduce time of learning new script or programming language.*
 
 ### Usage
 
