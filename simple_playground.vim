@@ -9,6 +9,7 @@
 "                Aim to reduce time of learning new script or programming language.
 
 function! SweepPlayground(prefix_cment)
+    let b:playground_cur_col = col(".") "for resume to current position
     " clear old output
     execute "mark s"
     execute "%s/\\s\\+" . escape(a:prefix_cment, "/") . ".*//ge"
@@ -18,16 +19,9 @@ endfunction
 
 function! MakePlayground(lang, print_pattern, cment_pattern)
 
-    " Sweep Playground
-    execute "mark s"
-    execute "%s/\\s\\+" . escape(a:cment_pattern, "/") . ".*//ge"
-    " execute "echo " . substitute('%s', "\s\+#=>.*", '', 'g')
-    execute "'s"
-
     let l:cmdexecute = a:lang . " " . shellescape(expand('%'))
     let l:outputs = split(system(l:cmdexecute), "\n")
 
-    let l:cur = 1
     execute "mark s"
     execute "normal! G"
 
@@ -48,7 +42,7 @@ function! MakePlayground(lang, print_pattern, cment_pattern)
         if l:nl_print < l:new_nl_print
             let l:nl_print = l:new_nl_print
         else
-            "reach to the last matche
+            "reach to the last match
             let l:nl_print = 0
         endif
     endwhile
@@ -56,22 +50,32 @@ function! MakePlayground(lang, print_pattern, cment_pattern)
     " echo l:collection_num_line
 
     let l:index = 0
-    for nline in l:collection_num_line
-        execute "normal! " . nline . "G$"
+    let l:fullpath = split(expand('%'), '/')
+    let l:filename = l:fullpath[len(l:fullpath) - 1]
+    "let l:error_pattern = l:filename
+    "echo l:error_pattern
+    set nowrap
+    for line_output in l:outputs
+        let l:nline = l:collection_num_line[l:index]
+
+        "while l:line_output =~ l:error_pattern
+        "  let l:index = l:index + 1
+        "  let l:line_output = l:outputs[l:index]
+        "endwhile
+
+        execute "normal! " . l:nline . "G$"
+
+        " add space
         while col("$") < max(l:eol_column)
-            execute "normal! A "
+          execute "normal! A "
         endwhile
-        set nowrap
-        execute "normal! A  " . a:cment_pattern . " " . l:outputs[l:index]
+
+        execute "normal! A  " . a:cment_pattern . " " . line_output
         let l:index = l:index + 1
     endfor
 
-    execute "normal! 's"
-
-    " for output in l:outputs
-    "     execute "normal! " . l:cur . "Go" . output
-    "     let l:cur = l:cur + 3
-    " endfor
+    " resume current position
+    execute "normal! 's" . b:playground_cur_col . "|"
 endfunction
 
 fun! BuildPlayground(command, comment, print_pattern)
