@@ -58,7 +58,9 @@ function! MakePlayground(lang, print_pattern, cment_pattern)
     "echo l:error_pattern
     set nowrap
     for line_output in l:outputs
-        let l:nline = l:collection_num_line[l:index]
+        if len(l:collection_num_line) > l:index
+            let l:nline = l:collection_num_line[l:index]
+        endif
 
         "while l:line_output =~ l:error_pattern
         "  let l:index = l:index + 1
