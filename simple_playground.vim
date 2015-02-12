@@ -10,8 +10,10 @@
 
 function! SweepPlayground(prefix_cment)
     let b:playground_cur_col = col(".") "for resume to current position
-    " clear old output
     execute "mark s"
+    execute "normal! H"
+    let b:playground_window_top_line = line(".") "for resume to window frame
+    " clear old output
     execute "%s/\\s\\+" . escape(a:prefix_cment, "/") . ".*//ge"
     " execute "echo " . substitute('%s', "\s\+#=>.*", '', 'g')
     execute "'s"
@@ -66,16 +68,17 @@ function! MakePlayground(lang, print_pattern, cment_pattern)
         execute "normal! " . l:nline . "G$"
 
         " add space
-        while col("$") < max(l:eol_column)
-          execute "normal! A "
-        endwhile
+        " while col("$") < max(l:eol_column)
+        "   execute "normal! A "
+        " endwhile
 
         execute "normal! A  " . a:cment_pattern . " " . line_output
         let l:index = l:index + 1
     endfor
 
     " resume current position
-    execute "normal! 's" . b:playground_cur_col . "|"
+    execute "normal! " . b:playground_window_top_line . "G"
+    execute "normal! zt's" . b:playground_cur_col . "|"
 endfunction
 
 fun! BuildPlayground(command, comment, print_pattern)
