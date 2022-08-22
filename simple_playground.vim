@@ -22,7 +22,18 @@ endfunction
 function! MakePlayground(lang, print_pattern, cment_pattern)
 
     let l:cmdexecute = a:lang . " " . shellescape(expand('%'))
-    let l:outputs = split(system(l:cmdexecute), "\n")
+    let l:outpus = []
+
+    "hardcode case typescript
+    if a:lang == "tsc"
+        let l:dummy = system(l:cmdexecute) "compile
+
+        let l:filename = shellescape(expand('%:s?\.ts$?\.js?')) "https://stackoverflow.com/a/54365844/490833
+        let l:exec = "node " . l:filename
+        let l:outputs = split(system(l:exec), "\n")
+    else
+        let l:outputs = split(system(l:cmdexecute), "\n")
+    endif
 
     execute "mark s"
     execute "normal! G"
