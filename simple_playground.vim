@@ -1,5 +1,5 @@
 " File:          simple_playground.vim
-" Author:        Sarunyoo Chobpanich
+" Author:        Yongchayut Theerachbowontat
 " Version:       0.1.0
 " Description:   simple_playground.vim insert the script's output in the
 "                current file in comment format after you write/save the file.
